@@ -37,7 +37,7 @@ export default defineConfig((/* ctx */) => {
         node: 'node20',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -71,10 +71,16 @@ export default defineConfig((/* ctx */) => {
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
-    devServer: {
-      // https: true,
-      open: true, // opens browser window automatically
-    },
+
+      devServer: {
+        proxy: {
+          "/api": {
+            target: "http://127.0.0.1:8000", // آدرس لاراول
+            changeOrigin: true,
+            secure: false
+          }
+        }
+      },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
