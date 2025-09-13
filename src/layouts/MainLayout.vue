@@ -39,18 +39,6 @@
           <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">داشبورد</q-tooltip>
         </q-item>
 
-        <!-- لیست موکلین -->
-        <q-item
-          clickable v-ripple
-          to="/clients"
-          class="menu-item"
-          active-class="menu-active"
-        >
-          <q-item-section avatar><q-icon name="groups" /></q-item-section>
-          <q-item-section v-show="!mini" style="font-size: 16px;">لیست موکلین</q-item-section>
-          <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">لیست موکلین</q-tooltip>
-        </q-item>
-
         <!-- لیست وکلا -->
         <q-item
           clickable v-ripple
@@ -61,6 +49,19 @@
           <q-item-section avatar><q-icon name="groups" /></q-item-section>
           <q-item-section v-show="!mini">لیست وکلا</q-item-section>
           <q-tooltip v-if="mini" class="tooltip-font" style="font-family: Vazirmatn,serif;">لیست وکلا</q-tooltip>
+        </q-item>
+
+
+        <!-- لیست موکلین -->
+        <q-item
+          clickable v-ripple
+          to="/clients"
+          class="menu-item"
+          active-class="menu-active"
+        >
+          <q-item-section avatar><q-icon name="groups" /></q-item-section>
+          <q-item-section v-show="!mini" style="font-size: 16px;">لیست موکلین</q-item-section>
+          <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">لیست موکلین</q-tooltip>
         </q-item>
 
         <!-- گزارشات -->
