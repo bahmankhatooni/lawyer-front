@@ -1,42 +1,68 @@
+
+
+const getUserRole = () => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  return user?.role_id || null
+}
+
+// گارد نقش و احراز هویت
+const requireAuth = (allowedRoles = []) => {
+  return (to, from, next) => {
+    const token = localStorage.getItem('token')
+    const role = getUserRole()
+
+    if (!token) {
+      // اگر لاگین نیست، به صفحه ورود هدایت شود
+      return next('/login')
+    }
+
+    if (allowedRoles.length && !allowedRoles.includes(role)) {
+      // اگر نقش مجاز نیست، به داشبورد هدایت شود
+      return next('/:catchAll(.*)*')
+    }
+
+    next()
+  }
+}
+
 const routes = [
   {
     path: '/',
-    redirect: 'login'
+    redirect: '/login'
   },
   {
     path: '/login',
     component: () => import('pages/LoginPage.vue')
   },
   {
-    path: '/dashboard',
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '',
+        path: 'dashboard',
         component: () => import('pages/DashboardPage.vue'),
-        // meta: { requiresAuth: true }  // نیازمند لاگین
+        beforeEnter: requireAuth([1,2,3]) // همه نقش‌ها
       },
       {
-        path: '/clients',
+        path: 'roles',
+        component: () => import('pages/RolesPage.vue'),
+        beforeEnter: requireAuth([1]) // دسترسی همه نقش‌ها
+      },
+      {
+        path: 'clients',
         component: () => import('pages/ClientsPage.vue'),
-        // meta: { requiresAuth: true }  // نیازمند لاگین
+        beforeEnter: requireAuth([1]) // دسترسی همه نقش‌ها
       },
       {
-        path: '/reports',
+        path: 'reports',
         component: () => import('pages/ReportPage.vue'),
-        // meta: { requiresAuth: true }  // نیازمند لاگین
+        beforeEnter: requireAuth([1,2]) // فقط مدیر سیستم و رئیس مرکز
       },
-
       {
-        path: '/lawyers',
+        path: 'lawyers',
         component: () => import('pages/LawyersPage.vue'),
-        // meta: { requiresAuth: true }  // نیازمند لاگین
+        beforeEnter: requireAuth([1]) // فقط مدیر سیستم
       },
-      {
-        path: '/home',
-        component: () => import('pages/HomePage.vue'),
-        // meta: { requiresAuth: true }  // نیازمند لاگین
-      }
     ]
   },
   {
