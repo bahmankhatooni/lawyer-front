@@ -65,6 +65,17 @@
           <q-tooltip v-if="mini" class="tooltip-font" style="font-family: Vazirmatn,serif;">وکلا</q-tooltip>
         </q-item>
 
+        <!-- لیست فایل -->
+        <q-item
+          clickable v-ripple
+          to="/files"
+          class="menu-item"
+          active-class="menu-active"
+        >
+          <q-item-section avatar><q-icon name="folder" /></q-item-section>
+          <q-item-section v-show="!mini">پرونده</q-item-section>
+          <q-tooltip v-if="mini" class="tooltip-font" style="font-family: Vazirmatn,serif;">پرونده</q-tooltip>
+        </q-item>
 
         <!-- لیست موکلین -->
         <q-item

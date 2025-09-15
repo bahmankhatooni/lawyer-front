@@ -54,6 +54,11 @@ const routes = [
         beforeEnter: requireAuth([1]) // دسترسی همه نقش‌ها
       },
       {
+        path: 'files',
+        component: () => import('pages/FilesPage.vue'),
+        beforeEnter: requireAuth([1]) // دسترسی همه نقش‌ها
+      },
+      {
         path: 'reports',
         component: () => import('pages/ReportPage.vue'),
         beforeEnter: requireAuth([1,2]) // فقط مدیر سیستم و رئیس مرکز
