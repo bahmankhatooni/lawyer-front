@@ -68,6 +68,11 @@ const routes = [
         component: () => import('pages/LawyersPage.vue'),
         beforeEnter: requireAuth([1]) // فقط مدیر سیستم
       },
+      {
+        path: '/profile',
+        component: () => import('pages/ProfilePage.vue'), // ✅ صفحه پروفایل
+        beforeEnter: requireAuth([1,2,3]) // فقط مدیر سیستم و رئیس مرکز
+      },
     ]
   },
   {

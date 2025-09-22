@@ -4,7 +4,37 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn flat dense round icon="menu" @click="mini = !mini" />
-        <q-toolbar-title style="font-family: Vazirmatn,serif; text-align: center">سامانه مدیریت وظایف وکیل</q-toolbar-title>
+
+        <q-toolbar-title style="font-family: Vazirmatn,serif; text-align: center">
+          سامانه مدیریت وظایف وکیل
+        </q-toolbar-title>
+
+        <!-- پروفایل کاربر -->
+        <div class="row items-center q-mr-md" >
+          <q-avatar size="40px">
+            <img v-if="user1.avatar" :src="user1.avatar" alt="avatar" />
+            <q-icon v-else name="account_circle" size="40px" />
+          </q-avatar>
+
+
+          <q-btn flat round dense>
+            <span style="font-family: Vazirmatn,serif;" class="q-ml-sm" >{{ name }}</span>
+            <q-icon name="arrow_drop_down" />
+            <q-menu>
+              <q-list style="min-width: 150px">
+                <q-item clickable v-ripple to="/profile">
+                  <q-item-section  avatar><q-icon style="color: #1976d2" name="settings" /></q-item-section>
+                  <q-item-section style="font-family: Vazirmatn,serif;">تنظیمات</q-item-section>
+                </q-item>
+                <q-separator spaced inset />
+                <q-item clickable v-ripple @click="logout">
+                  <q-item-section avatar ><q-icon style="color: #1976d2" name="logout" /></q-item-section>
+                  <q-item-section style="font-family: Vazirmatn,serif;">خروج</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -20,96 +50,65 @@
       class="bg-grey-1"
       style="background: #1976d2 !important"
     >
-      <div class="q-pa-sm flex items-center" style="font-family: Vazirmatn,serif; text-align: center; display: block">
-        <div class="text-weight-medium text-grey-8" v-show="!mini" style="color: #ffffff !important; font-size: large" > {{name}}</div>
+      <div class="q-pa-sm flex items-center"
+           style="font-family: Vazirmatn,serif; text-align: center; display: block">
+        <div class="text-weight-medium text-grey-8"
+             v-show="!mini"
+             style="color: #ffffff !important; font-size: large">{{ name }}</div>
       </div>
 
       <q-separator spaced inset />
 
       <q-list padding separator class="menu-list">
         <!-- داشبورد -->
-        <q-item
-          clickable v-ripple
-          to="/dashboard" exact
-          class="menu-item"
-          active-class="menu-active"
-        >
+        <q-item clickable v-ripple to="/dashboard" exact
+                class="menu-item" active-class="menu-active">
           <q-item-section avatar><q-icon name="dashboard" /></q-item-section>
           <q-item-section v-show="!mini">داشبورد</q-item-section>
-          <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">داشبورد</q-tooltip>
+          <q-tooltip v-if="mini">داشبورد</q-tooltip>
         </q-item>
 
         <!-- لیست نقش -->
-        <q-item
-          v-if="roleId === 1"
-          clickable v-ripple
-          to="/roles"
-          class="menu-item"
-          active-class="menu-active"
-        >
+        <q-item v-if="roleId === 1"
+                clickable v-ripple to="/roles"
+                class="menu-item" active-class="menu-active">
           <q-item-section avatar><q-icon name="security" /></q-item-section>
           <q-item-section v-show="!mini">نقش</q-item-section>
-          <q-tooltip v-if="mini" class="tooltip-font" style="font-family: Vazirmatn,serif;">نقش</q-tooltip>
+          <q-tooltip v-if="mini">نقش</q-tooltip>
         </q-item>
 
         <!-- لیست وکلا -->
-        <q-item
-          v-if="roleId === 1"
-          clickable v-ripple
-          to="/lawyers"
-          class="menu-item"
-          active-class="menu-active"
-        >
+        <q-item v-if="roleId === 1"
+                clickable v-ripple to="/lawyers"
+                class="menu-item" active-class="menu-active">
           <q-item-section avatar><q-icon name="people" /></q-item-section>
           <q-item-section v-show="!mini">وکلا</q-item-section>
-          <q-tooltip v-if="mini" class="tooltip-font" style="font-family: Vazirmatn,serif;">وکلا</q-tooltip>
+          <q-tooltip v-if="mini">وکلا</q-tooltip>
         </q-item>
 
         <!-- لیست فایل -->
-        <q-item
-          clickable v-ripple
-          to="/files"
-          class="menu-item"
-          active-class="menu-active"
-        >
+        <q-item clickable v-ripple to="/files"
+                class="menu-item" active-class="menu-active">
           <q-item-section avatar><q-icon name="folder" /></q-item-section>
           <q-item-section v-show="!mini">پرونده</q-item-section>
-          <q-tooltip v-if="mini" class="tooltip-font" style="font-family: Vazirmatn,serif;">پرونده</q-tooltip>
+          <q-tooltip v-if="mini">پرونده</q-tooltip>
         </q-item>
 
         <!-- لیست موکلین -->
-        <q-item
-          v-if="roleId === 1"
-          clickable v-ripple
-          to="/clients"
-          class="menu-item"
-          active-class="menu-active"
-        >
+        <q-item v-if="roleId === 1"
+                clickable v-ripple to="/clients"
+                class="menu-item" active-class="menu-active">
           <q-item-section avatar><q-icon name="groups" /></q-item-section>
-          <q-item-section v-show="!mini" style="font-size: 16px;">موکلین</q-item-section>
-          <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">موکلین</q-tooltip>
+          <q-item-section v-show="!mini">موکلین</q-item-section>
+          <q-tooltip v-if="mini">موکلین</q-tooltip>
         </q-item>
 
         <!-- گزارشات -->
-        <q-item
-          clickable v-ripple
-          to="/reports"
-          class="menu-item"
-          active-class="menu-active"
-        >
+        <q-item clickable v-ripple to="/reports"
+                class="menu-item" active-class="menu-active">
           <q-item-section avatar><q-icon name="analytics" /></q-item-section>
           <q-item-section v-show="!mini">گزارشات</q-item-section>
-          <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">گزارشات</q-tooltip>
-        </q-item>
-
-
-        <q-separator spaced inset />
-
-        <!-- خروج -->
-        <q-item clickable v-ripple @click="logout" class="menu-item">
-          <q-item-section avatar><q-icon name="logout" /></q-item-section>
-          <q-item-section v-show="!mini">خروج</q-item-section>
-          <q-tooltip v-if="mini" style="font-family: Vazirmatn,serif;">خروج</q-tooltip>
+          <q-tooltip v-if="mini">گزارشات</q-tooltip>
         </q-item>
       </q-list>
     </q-drawer>
@@ -131,26 +130,20 @@ const drawer = ref(true)
 const mini = ref(true)
 const user = ref(null)
 const user1 = JSON.parse(localStorage.getItem('user')) || {}
-const roleId = user1.role_id  // استفاده در template برای v-if
-const name = user1.fname+' '+user1.lname
-// بارگذاری کاربر از localStorage
+const roleId = user1.role_id
+const name = user1.fname + ' ' + user1.lname
+
 onMounted(() => {
   const storedUser = localStorage.getItem('user')
   if (storedUser) user.value = JSON.parse(storedUser)
 })
 
-// تابع خروج امن
-async function logout() {
+async function logout () {
   try {
-    // 1️⃣ API logout (اختیاری)
     await api.post('/logout')
-
-    // 2️⃣ پاک کردن اطلاعات محلی
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     user.value = null
-
-    // 3️⃣ هدایت به login و جلوگیری از back
     router.push({ path: '/login', replace: true })
   } catch (err) {
     console.error('خطا در خروج از سیستم:', err)
@@ -166,7 +159,6 @@ async function logout() {
 .menu-list {
   font-family: Vazirmatn,serif;
   font-size: large;
-
 }
 
 .menu-item {
@@ -180,12 +172,11 @@ async function logout() {
   background: rgba(0, 0, 1, 0.40);
 }
 
-.menu-active{
+.menu-active {
   background: #f44336;
 }
 
-.q-item__section--side > .q-icon{
+.q-item__section--side > .q-icon {
   color: #ffffff;
 }
-
 </style>
