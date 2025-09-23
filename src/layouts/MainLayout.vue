@@ -10,11 +10,17 @@
         </q-toolbar-title>
 
         <!-- پروفایل کاربر -->
-        <div class="row items-center q-mr-md" >
-          <q-avatar size="40px">
-            <img v-if="user1.avatar" :src="user1.avatar" alt="avatar" />
-            <q-icon v-else name="account_circle" size="40px" />
+        <div class="row q-mr-md" style="direction: ltr" >
+          <q-avatar size="50px">
+            <img
+              v-if="user1.profile_image"
+              :src="`http://127.0.0.1:8000/${user1.profile_image}`"
+              alt="avatar"
+            />
+            <q-icon v-else name="account_circle" size="50px" />
           </q-avatar>
+
+
 
 
           <q-btn flat round dense>
