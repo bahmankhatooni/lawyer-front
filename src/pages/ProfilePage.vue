@@ -17,6 +17,26 @@
 
       <q-card-section>
         <q-form @submit.prevent="updateProfile" class="q-gutter-md">
+          <div class="row items-center q-gutter-md q-mt-md justify-around">
+          <!-- فیلد ایمیل -->
+          <q-input
+            v-model="form.email"
+            type="email"
+            label="ایمیل"
+            outlined
+            dense
+          />
+
+          <!-- فیلد شماره همراه -->
+          <q-input
+            v-model="form.phone"
+            type="text"
+            label="شماره همراه"
+            outlined
+            dense
+          />
+          </div>
+          <q-separator spaced />
 
           <!-- فیلد رمز عبور -->
           <q-input
@@ -73,6 +93,8 @@ import { api } from 'boot/axios'
 
 const user = JSON.parse(localStorage.getItem('user')) || {}
 const form = ref({
+  email: user.email || '',
+  phone: user.phone || '',
   password: '',
   password_confirmation: '',
   profile_image: null
@@ -82,7 +104,6 @@ const previewImage = ref(user.profile_image || null)
 const successMessage = ref('')
 const errorMessage = ref('')
 
-// گرفتن فایل آپلود شده
 function onFileAdded(files) {
   if (files && files.length > 0) {
     form.value.profile_image = files[0]
@@ -90,25 +111,24 @@ function onFileAdded(files) {
   }
 }
 
-// fake factory برای جلوگیری از آپلود خودکار
 function fakeUploadFactory() {
-  return {
-    url: '',
-    method: 'POST'
-  }
+  return { url: '', method: 'POST' }
 }
 
-// ارسال داده‌ها به بک‌اند
 async function updateProfile() {
   successMessage.value = ''
   errorMessage.value = ''
 
   try {
     const formData = new FormData()
+    formData.append('email', form.value.email)
+    formData.append('phone', form.value.phone)
+
     if (form.value.password) {
       formData.append('password', form.value.password)
       formData.append('password_confirmation', form.value.password_confirmation)
     }
+
     if (form.value.profile_image) {
       formData.append('profile_image', form.value.profile_image)
     }
@@ -117,10 +137,8 @@ async function updateProfile() {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
 
-    // ذخیره تغییرات در localStorage
     localStorage.setItem('user', JSON.stringify(res.data.user))
     previewImage.value = res.data.user.profile_image
-
     successMessage.value = 'تغییرات با موفقیت انجام شد'
   } catch (err) {
     console.error(err)

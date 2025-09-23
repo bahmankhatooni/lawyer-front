@@ -57,21 +57,17 @@
 
                 <!-- ردیف دوم فرم -->
                 <div class="row items-center q-gutter-md q-mt-md">
+
                   <div class="col">
-                    <q-select
-                      v-model.number="form.role_id"
-                      :options="roles"
-                      option-label="label"
-                      option-value="value"
-                      emit-value
-                      map-options
+                    <q-input
+                      v-model="form.phone"
+                      label="موبایل"
+                      mask="###########"
+                      :rules="[val => !val || /^09[0-9]{9}$/.test(val) || 'شماره موبایل باید ۱۱ رقم و با 09 شروع شود']"
                       outlined
                       dense
-                      label="نقش"
                     />
-                  </div>
-                  <div class="col">
-                    <q-input v-model="form.password" label="پسورد" type="password" outlined dense />
+
                   </div>
                   <div class="col">
                     <q-input
@@ -83,8 +79,28 @@
                       ]"
                       outlined
                       dense
-                      style="margin-top: 16px"
                     />
+                  </div>
+                  <div class="col" >
+                    <q-select style="margin-top: -20px"
+                      v-model.number="form.role_id"
+                      :options="roles"
+                      option-label="label"
+                      option-value="value"
+                      emit-value
+                      map-options
+                      outlined
+                      dense
+                      label="نقش"
+                    />
+                  </div>
+
+                </div>
+
+                <!-- ردیف سوم فرم -->
+                <div class="row items-center q-gutter-md q-mt-md " style="justify-self: center">
+                  <div class="col">
+                    <q-input  v-model="form.password" label="پسورد" type="password" outlined dense />
                   </div>
                 </div>
               </div>
@@ -182,6 +198,7 @@ const form = ref({
   fname: '',
   lname: '',
   username: '',
+  phone: '',
   email: '',
   password: '',
   role_id: 1,
@@ -200,6 +217,7 @@ const columns = [
   { name: 'fname', label: 'نام', field: 'fname', align: 'center' },
   { name: 'lname', label: 'نام خانوادگی', field: 'lname' },
   { name: 'username', label: 'نام کاربری', field: 'username' },
+  { name: 'phone', label: 'موبایل', field: 'phone' },
   { name: 'email', label: 'ایمیل', field: 'email' },
   { name: 'role_id', label: 'نقش', field: 'role_id' },
   { name: 'actions', label: 'عملیات', field: 'actions', style: 'width:100px' },
@@ -218,7 +236,7 @@ function toggleForm() {
 
 // پاک کردن فرم و خروج از ویرایش
 function cancelForm() {
-  form.value = { fname: '', lname: '', username: '', email: '', password: '', role_id: 1 }
+  form.value = { fname: '', lname: '', username: '',phone: '', email: '', password: '', role_id: 1 }
   selectedUserId.value = null
   editMode.value = false
   showForm.value = false
@@ -261,6 +279,7 @@ const editUser = (user) => {
     fname: user.fname,
     lname: user.lname,
     username: user.username,
+    phone: user.phone,
     email: user.email,
     password: '',
     role_id: Number(user.role_id), // چون v-model.number داریم، حتما عدد میشه
@@ -345,6 +364,7 @@ onMounted(fetchUsers)
 }
 .q-field--outlined .q-field__control {
   width: 230px;
+
 }
 .q-card {
   border: solid;
@@ -354,4 +374,8 @@ onMounted(fetchUsers)
 .q-item__section--side > .q-icon {
   color: #1976d2;
 }
+.q-select-item{
+  font-family: Vazirmatn, serif;
+}
+
 </style>
