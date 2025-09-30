@@ -25,7 +25,7 @@
                       label="عنوان پرونده"
                       :rules="[val => !!val || 'عنوان پرونده الزامی است']"
                       outlined dense
-                      style="margin-top: 16px"
+                      style="margin-top: 20px"
                     />
                   </div>
 
@@ -254,4 +254,7 @@ onMounted(()=>{
 .q-field--outlined .q-field__control { width: 230px; }
 .q-card { border: solid; border-color: #1976d2; font-family: Vazirmatn, serif; }
 .q-item__section--side > .q-icon { color: #1976d2; }
+.q-item__section--main{
+  font-family: Vazirmatn,serif; font-size: larger; text-align: center;
+}
 </style>

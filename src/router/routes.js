@@ -35,6 +35,11 @@ const routes = [
     component: () => import('pages/LoginPage.vue')
   },
   {
+    path: '/forgot-password',
+    component: () => import('pages/ForgotPasswordPage.vue')
+  },
+
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [

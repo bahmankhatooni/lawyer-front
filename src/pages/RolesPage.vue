@@ -28,7 +28,7 @@
         <q-card style="width: 400px; background-color: #ffffff">
           <q-card-section>
             <q-form @submit.prevent="editMode ? updateRole() : storeRole()">
-              <div class="q-gutter-md">
+              <div class="q-gutter-md" style="justify-items: center">
                 <q-input
                   v-model="form.name"
                   label="نام نقش"

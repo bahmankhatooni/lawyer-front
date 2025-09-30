@@ -39,7 +39,8 @@
           <q-separator spaced />
 
           <!-- فیلد رمز عبور -->
-          <q-input
+          <div class="row items-center q-gutter-md q-mt-md justify-around">
+          <q-input style="margin-top:-5px"
             v-model="form.password"
             type="password"
             label="رمز عبور جدید"
@@ -56,14 +57,15 @@
             dense
             :rules="[val => val === form.password || 'رمزها مطابقت ندارند']"
           />
-
+          </div>
           <q-separator spaced />
 
           <!-- آپلود تصویر -->
           <div class="text-subtitle1 q-mb-sm">تصویر پروفایل</div>
           <div class="row items-center q-gutter-md">
             <q-avatar size="100px">
-              <img v-if="previewImage" :src="previewImage" alt="profile" />
+              <img v-if="user.profile_image"
+                   :src="`http://127.0.0.1:8000/${user.profile_image}`" alt="profile" />
               <q-icon v-else name="person" size="100px" />
             </q-avatar>
 
